@@ -133,7 +133,7 @@ void lerIngredientes (Ingredientes *ingredientes) {
 bool buscarClientePorCodigo(Clientes *clientes, int codigo) {
 
     int i = 0;
-    int f = 10;
+    int f = T;
 
     int m = ( i + f ) / 2;
 
@@ -152,7 +152,47 @@ bool buscarClientePorCodigo(Clientes *clientes, int codigo) {
 
 }
 
-void adicionarCliente (Clientes ATUAL[], int contATUAL, Clientes FINAL[], int &contFINAL) {
+bool buscarGarcomPorCodigo(Garcons *garcons, int codigo) {
+    int i = 0;
+    int f = T;
+
+    int m = ( i + f ) / 2;
+
+    for (; f >= i && codigo != garcons[m].codigo; m = ( i + f) / 2) {
+        if (codigo > garcons[m].codigo) {
+            i = m + 1;
+        } else {
+            i = m - 1;
+        }
+    }
+    if (codigo == garcons[m].codigo) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool buscarProdutoPorCodigo(Produtos *produtos, int codigo) {
+    int i = 0;
+    int f = T;
+
+    int m = ( i + f ) / 2;
+
+    for (; f >= i && codigo != produtos[m].codigo; m = ( i + f) / 2) {
+        if (codigo > produtos[m].codigo) {
+            i = m + 1;
+        } else {
+            i = m - 1;
+        }
+    }
+    if (codigo == produtos[m].codigo) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+void adicionarCliente(Clientes ATUAL[], int contATUAL, Clientes FINAL[], int &contFINAL) {
 
     int contNOVO = 0;
     Clientes NOVO[T];
@@ -213,6 +253,83 @@ void adicionarCliente (Clientes ATUAL[], int contATUAL, Clientes FINAL[], int &c
         k++;
     }
     contFINAL = k;
+}
+
+void adicionarGarcom(Garcons ATUAL[], int contATUAL, Garcons FINAL[], int &contFINAL) {
+    int contNOVO = 0;
+    Garcons NOVO[T];
+
+    int encerrar = 0;
+    for (int i = 0; encerrar == 0; i++) {
+        int codigo;
+
+        if (codigo == 0) {
+            encerrar = 1;
+        } else {
+            if (buscarGarcomPorCodigo(ATUAL, codigo) == true || buscarGarcomPorCodigo(NOVO, codigo) == true) {
+                cout << "Já existe garçom cadastrado com esse ID.";
+            } else {
+                NOVO[i].codigo = codigo;
+                cout << "Digite o nome do garçom: ";
+                cin >> NOVO[i].nome;
+                contNOVO++;
+            }
+        }
+    }
+
+    int i = 0;
+    int j = 0;
+    int k = 0;
+
+    for (; i < contATUAL && j < contNOVO; k++) {
+        if (ATUAL[i].codigo < NOVO[j].codigo) {
+            FINAL[k].codigo = ATUAL[i].codigo;
+            FINAL[k].nome = ATUAL[i].nome;
+            i++;
+        } else {
+            FINAL[k].codigo = NOVO[j].codigo;
+            FINAL[k].nome = NOVO[j].nome;
+            j++;
+        }
+    }
+
+    while (i < contATUAL) {
+        FINAL[k].codigo = ATUAL[i].codigo;
+        FINAL[k].nome = ATUAL[i].nome;
+        i++;
+        k++;
+    }
+
+    while (j < contNOVO) {
+        FINAL[k].codigo = NOVO[j].codigo;
+        FINAL[k].nome = NOVO[j].nome;
+        j++;
+        k++;
+    }
+    contFINAL = k;
+}
+
+void excluirProdutos(Produtos ATUAL[], int contATUAL, Produtos FINAL[], int &contFINAL) {
+
+    int i = 0;
+    int j = 0;
+    int k = 0;
+
+    int contNOVO = 0;
+
+    int encerrar = 0;
+    for (int i = 0; encerrar == 0; i++) {
+        int codigo;
+
+        if (codigo == 0) {
+            encerrar = 1;
+        } else {
+            if (buscarProdutoPorCodigo(ATUAL, codigo) == true) {
+
+            }
+        }
+    }
+
 }
 
 
